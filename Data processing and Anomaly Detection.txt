@@ -1,0 +1,13 @@
+from pyspark.sql.functions import col, from_json
+from pyspark.sql.types import StructType, StructField, DoubleType
+
+schema = StructType([StructField("region", StringType()), StructField("temperature", DoubleType())])
+processed_df = sensor_df.select(from_json("json_value", schema).alias("data")).select("data.*")
+
+alert_df = processed_df.filter(processed_df.temperature > 75)
+
+# Writing processed data to Delta Lake
+processed_df.writeStream.format("delta").outputMode("append").option("checkpointLocation", "/mnt/checkpoints/sensor_data").start("/mnt/delta/sensor_data")
+
+# For real-time alerting (using a custom alert function or integration with an external service)
+alert_df.writeStream.foreachBatch(lambda batch_df, batch_id: batch_df.show()).start()
