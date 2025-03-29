@@ -1,0 +1,3 @@
+region_avg_temp_df = processed_df.groupBy("region").agg({"temperature": "avg"}).withColumnRenamed("avg(temperature)", "avg_temperature")
+
+region_avg_temp_df.writeStream.outputMode("complete").format("delta").option("checkpointLocation", "/mnt/checkpoints/region_avg_temp").start("/mnt/delta/region_avg_temp")
