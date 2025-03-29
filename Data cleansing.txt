@@ -1,0 +1,2 @@
+cleansed_df = raw_df.filter("transaction_id IS NOT NULL AND amount > 0")
+cleansed_df = cleansed_df.dropna(subset=["transaction_id", "amount"])
