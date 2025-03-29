@@ -1,0 +1,2 @@
+validated_df = raw_json_df.filter("customer_id IS NOT NULL AND email IS NOT NULL")
+validated_df.write.format("delta").mode("overwrite").save("/mnt/delta/validated_customer_data")

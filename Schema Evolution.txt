@@ -1,0 +1,1 @@
+raw_json_df.write.format("delta").mode("append").option("mergeSchema", "true").save("/mnt/delta/customer_data")

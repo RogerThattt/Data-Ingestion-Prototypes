@@ -1,0 +1,1 @@
+raw_json_df = spark.read.json("s3://your-bucket/customer_data/*.json")
